@@ -3,13 +3,13 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-	<title>Dashboard | SJETA Application</title>
+	<title>Dashboard | BVFCL Application</title>
 
 	<!--=== CSS ===-->
 
 	<!-- Bootstrap -->
 
-	<link href="{{ asset('bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ asset('assets/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
 
 	<!-- jQuery UI -->
 	<!--<link href="plugins/jquery-ui/jquery-ui-1.10.2.custom.css" rel="stylesheet" type="text/css" />-->
@@ -31,13 +31,14 @@
 		<link href="assets/css/ie8.css" rel="stylesheet" type="text/css" />
 	<![endif]-->
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
-
+	<link href=" {{ asset('assets/css/jquery.datetimepicker.css') }}" rel="stylesheet">
+	<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css" rel="stylesheet">
 	<!--=== JavaScript ===-->
 
-	<script type="text/javascript" src="{{ asset('assets/js/libs/jquery-1.10.2.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('assets/jquery/dist/jquery.min.js') }}"></script>
 	<script type="text/javascript" src="{{ asset('plugins/jquery-ui/jquery-ui-1.10.2.custom.min.js') }}"></script>
 
-	<script type="text/javascript" src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('assets/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 	<script type="text/javascript" src="{{ asset('assets/js/libs/lodash.compat.min.js') }}"></script>
 
 	<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -91,14 +92,15 @@
 	<script type="text/javascript" src="{{ asset('assets/js/plugins.form-components.js') }}"></script>
 
 	<link href="{{ asset('assets/css/main.css') }}" rel="stylesheet" type="text/css" />
-
+	<script src=" {{ asset('assets/js/jquery.datetimepicker.js') }}"></script>
+	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 	<style>
 		input[type="password"] {	
 			padding: 10px;
 			border: 1px solid #D8D8D8;
 		}
 	</style>
-
+	@yield('pageCss')
 	<script>
 	$(document).ready(function(){
 		"use strict";
@@ -106,6 +108,31 @@
 		App.init(); // Init layout and core plugins
 		Plugins.init(); // Init all plugins
 		FormComponents.init(); // Init all form-specific plugins
+
+		$('.timepicker').datetimepicker({format:'h:i A', datepicker:false, step:10});
+        $('.datepicker').datetimepicker({format:'d-m-Y', timepicker:false});
+        $('.datetimepicker').datetimepicker({format:'d-m-Y h:i A'});
+
+        $('.monthyear').datepicker( {
+                changeMonth: true,
+                changeYear: true,
+                showButtonPanel: true,
+                dateFormat: 'MM yy',
+                onClose: function(dateText, inst) { 
+                function isDonePressed(){
+                                return ($('#ui-datepicker-div').html().indexOf('ui-datepicker-close ui-state-default ui-priority-primary ui-corner-all ui-state-hover') > -1);
+                            }
+
+                            if (isDonePressed()){
+
+                                var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+                                var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+                                $(this).datepicker('setDate', new Date(year, month, 1));
+                                 console.log('Done is pressed')
+
+                            }
+                }
+            });
 	});
 	</script>
 
@@ -125,6 +152,14 @@
 
 		<div id="content">
 			<div class="container">
+				<div class="col-md-10">
+	                @if(Session::has('message'))
+	                <div class="alert {{ Session::get('alert-class', 'alert-info') }}">
+	                    <button type="button" class="close" data-dismiss="alert">×</button>
+	                    {!! Session::get('message') !!}
+	                </div>
+	                @endif
+	            </div>
 				@yield('content')
 			</div>
 			<!-- /.container -->

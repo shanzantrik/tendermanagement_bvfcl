@@ -1,3 +1,10 @@
+<?php
+if (Auth::guard('admin')->check())
+{
+    header('Location: '.URL::to('/admin'));
+    exit;
+}
+?>
 @extends('layouts.app')
 
 @section('content')
@@ -10,15 +17,15 @@
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
                         {!! csrf_field() !!}
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">E-Mail Address</label>
+                        <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
+                            <label class="col-md-4 control-label">Uername</label>
 
                             <div class="col-md-6">
-                                <input type="email" class="form-control" name="email" value="{{ old('email') }}">
+                                <input type="text" class="form-control" name="username" value="{{ old('username') }}">
 
-                                @if ($errors->has('email'))
+                                @if ($errors->has('username'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
+                                        <strong>{{ $errors->first('username') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -38,19 +45,20 @@
                             </div>
                         </div>
 
-                        
-
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
                                     <i class="fa fa-btn fa-sign-in"></i>Login
-                                </button>
-
-                                <br><a class="btn btn-link pull-right" href="{{ url('/admin/login') }}">Admin Login</a>
+                                </button> 
                             </div>
                         </div>
                     </form>
+
+                    <a href=" {{ route('admin.login') }}">Admin Login</a>
+                    
                 </div>
+
+
             </div>
         </div>
     </div>

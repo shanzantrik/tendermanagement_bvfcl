@@ -8,7 +8,7 @@
 
 			<!-- Logo -->
 			<a class="navbar-brand" href="index.html">
-				<strong>Arunachal Pradesh IT</strong>
+				<strong>BVFCL</strong>
 			</a>
 			<!-- /logo -->
 
@@ -28,12 +28,11 @@
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 						<!--<img alt="" src="assets/img/avatar1_small.jpg" />-->
 						<i class="icon-male"></i>
-						<span class="username">John Doe</span>
+						<span class="username">Admin</span>
 						<i class="icon-caret-down small"></i>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a href="pages_user_profile.html"><i class="icon-user"></i> My Profile</a></li>
-						<li><a href="login.html"><i class="icon-key"></i> Log Out</a></li>
+						<li><a href="{{ route('admin.logout') }}"><i class="icon-key"></i> Log Out</a></li>
 					</ul>
 				</li>
 				<!-- /user login dropdown -->

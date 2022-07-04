@@ -1,0 +1,18 @@
+{
+  "name": "public",
+  "authors": [
+    "Nitish Dolakasharia <nitish.dola@gmail.com>"
+  ],
+  "description": "required js and css packages",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
